@@ -1,0 +1,14 @@
+<h1>Hi</h1>
+
+<div id="the-thing">
+    This is the thing!
+</div>
+
+<script src="/socket.io/socket.io.js"></script>
+<script>
+    var socket = io.connect();
+
+    socket.on("heard", function(data){
+        document.getElementById('the-thing').innerHTML = data;
+	});
+</script>

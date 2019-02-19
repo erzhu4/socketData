@@ -1,0 +1,16 @@
+{
+  "name": "node-express",
+  "version": "1.0.0",
+  "description": "lol",
+  "main": "server.js",
+  "scripts": {
+    "server": "node server.js"
+  },
+  "dependencies": {
+    "circular-json": "^0.5.4",
+    "express": "^4.16.3",
+    "socket.io": "^2.1.1"
+  },
+  "author": "uhhhh",
+  "license": "ISC"
+}
