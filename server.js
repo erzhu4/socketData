@@ -3,7 +3,9 @@ var app = express();
 var server = require('http').createServer(app);
 var socketIo = require('socket.io');
 
-const absoluteDir = "ABSOLUTE DIR!!";
+var mainData = null;
+
+const absoluteDir = "absolute dir";
 
 app.use(express.static('public'));
 
@@ -15,12 +17,14 @@ app.get('/', function(req, res) {
 
 app.get('/data/:data', function(req, res) {
 	var data = req.params.data;
-	io.sockets.emit("heard", data);
+	mainData = data;
+	io.sockets.emit("heard", mainData);
 	res.status(200).send('OK!');
 });
 
 io.sockets.on('connection', function(socket){
 	console.log("Socket connected!!!");
+	io.sockets.emit("heard", mainData);
 });
 
 server.listen(1000, function() {
