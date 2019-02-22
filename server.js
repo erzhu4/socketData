@@ -3,7 +3,7 @@ var app = express();
 var server = require('http').createServer(app);
 var socketIo = require('socket.io');
 
-var mainData = null;
+var mainData = 0;
 
 const absoluteDir = "C:/Users/Eric.Zhu/Desktop/Donkey Pictures/nodeTestApp";
 
@@ -15,12 +15,20 @@ app.get('/', function(req, res) {
 	res.sendFile(absoluteDir + '/html/index.html');
 });
 
-app.get('/data/:data', function(req, res) {
+app.get('/add/:data', function(req, res) {
 	var data = req.params.data;
-	console.log("/data just happened - " + JSON.stringify(data));
+	console.log("/add just happened - " + JSON.stringify(data));
+	mainData = parseFloat(mainData) + parseFloat(data);
+	io.sockets.emit("heard", mainData);
+	res.status(200).send('YAY!!!');
+});
+
+app.get('/setinitialnumber/:data', function(req, res) {
+	var data = req.params.data;
+	console.log("/set initial just happened - " + JSON.stringify(data));
 	mainData = data;
 	io.sockets.emit("heard", mainData);
-	res.status(200).send('OK!');
+	res.status(200).send('Initial number set!');
 });
 
 io.sockets.on('connection', function(socket){
