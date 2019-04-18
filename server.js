@@ -15,10 +15,16 @@ app.get('/', function(req, res) {
 	res.sendFile(absoluteDir + '/html/index.html');
 });
 
-app.get('/add/:data', function(req, res) {
-	var data = req.params.data;
-	console.log("/add just happened - " + JSON.stringify(data));
-	mainData = parseFloat(mainData) + parseFloat(data);
+app.get('/add', function(req, res) {
+	console.log("/add just happened");
+	mainData = parseFloat(mainData) + 0.5;
+	io.sockets.emit("heard", mainData);
+	res.status(200).send('YAY!!!');
+});
+
+app.get('/sub', function(req, res) {
+	console.log("/sub just happened");
+	mainData = parseFloat(mainData) - 0.5;
 	io.sockets.emit("heard", mainData);
 	res.status(200).send('YAY!!!');
 });
